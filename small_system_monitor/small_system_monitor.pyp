@@ -122,6 +122,10 @@ if __name__ == "__main__":
     directory, _ = os.path.split(__file__)
     fn = os.path.join(directory, "res", "small_system_monitor.tif")
     bmp = c4d.bitmaps.BaseBitmap()
+    if bmp is None:
+        raise MemoryError("Failed to create a BaseBitmap.")
+    if bmp.InitWith(fn)[0] != c4d.IMAGERESULT_OK:
+        raise MemoryError("Failed to initialize the BaseBitmap.")
     c4d.plugins.RegisterCommandPlugin(id=PLUGIN_ID,
                                       str="SmallSystemMonitor",
                                       help="Show the current memory and cpu usage.",
