@@ -20,5 +20,5 @@ Cinema4D 用の省スペースな CPU & Memory モニタープラグインです
 ## その他の場合
 
 - small_system_monitor/small_system_monitor フォルダをC4Dのプラグインフォルダに置く
-- psutilライブラリをダウンロードし、C4DのPython外部ライブラリフォルダに置く
+- プラットフォームに対応するpsutilライブラリをダウンロードし、C4DのPython外部ライブラリフォルダに置く
 
