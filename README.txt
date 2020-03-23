@@ -25,6 +25,6 @@ CPUの使用状況、メモリの使用状況を表示します。メモリの�
 
 - small_system_monitor/small_system_monitor フォルダをC4Dのプラグインフォルダに置く
 - small_system_monitor/psutil フォルダを
-  ~/Library/Preferences/MAXON/{cinemaversion}/python27/libs
+  ~/Library/Preferences/MAXON/python27/libs
   に置く
 
