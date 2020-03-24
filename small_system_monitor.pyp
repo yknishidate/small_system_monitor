@@ -8,8 +8,12 @@ https://opensource.org/licenses/mit-license.php
 """
 
 import os
+import sys
 import c4d
+abs_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(abs_dir)
 import psutil
+
 
 PLUGIN_ID = 1054769
 
