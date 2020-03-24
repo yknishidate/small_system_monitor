@@ -89,18 +89,18 @@ class SystemMonitor(c4d.gui.GeDialog):
         self.SetTitle("Small System Monitor")
 
         # cpu area
-        if self.GroupBegin(id=1, flags=c4d.BFH_SCALEFIT, rows=1, title="", cols=2, groupflags=c4d.BORDER_GROUP_IN):
+        if self.GroupBegin(id=1100, flags=c4d.BFH_SCALEFIT, rows=1, title="", cols=2, groupflags=c4d.BORDER_GROUP_IN):
             self.GroupBorderSpace(5, 0, 5, 0)
-            self.cpu_text = self.AddStaticText(id=3, initw=80, inith=0, name="CPU", borderstyle=0, flags=c4d.BFH_LEFT)
-            cpu_area = self.AddUserArea(id=1001, flags=c4d.BFH_SCALEFIT, inith=BAR_HEIGHT)
+            self.cpu_text = self.AddStaticText(id=1101, initw=80, inith=0, name="CPU", borderstyle=0, flags=c4d.BFH_LEFT)
+            cpu_area = self.AddUserArea(id=1102, flags=c4d.BFH_SCALEFIT, inith=BAR_HEIGHT)
             self.AttachUserArea(self.cpu_info, cpu_area)
         self.GroupEnd()
 
         # memory area
-        if self.GroupBegin(id=2, flags=c4d.BFH_SCALEFIT, rows=1, title="", cols=2, groupflags=c4d.BORDER_GROUP_IN):
+        if self.GroupBegin(id=1200, flags=c4d.BFH_SCALEFIT, rows=1, title="", cols=2, groupflags=c4d.BORDER_GROUP_IN):
             self.GroupBorderSpace(5, 0, 5, 5)
-            self.mem_text = self.AddStaticText(id=2, initw=80, inith=0, name="Memory", borderstyle=0, flags=c4d.BFH_LEFT)
-            memory_area = self.AddUserArea(id=1002, flags=c4d.BFH_SCALEFIT, inith=BAR_HEIGHT)
+            self.mem_text = self.AddStaticText(id=1201, initw=80, inith=0, name="Memory", borderstyle=0, flags=c4d.BFH_LEFT)
+            memory_area = self.AddUserArea(id=1202, flags=c4d.BFH_SCALEFIT, inith=BAR_HEIGHT)
             self.AttachUserArea(self.mem_info, memory_area)
         self.GroupEnd()
 
@@ -131,11 +131,11 @@ class SystemMonitorCommandData(c4d.plugins.CommandData):
 
 if __name__ == "__main__":
     directory, _ = os.path.split(__file__)
-    fn = os.path.join(directory, "res", "small_system_monitor.tif")
+    img_path = os.path.join(directory, "res", "small_system_monitor.tif")
     bmp = c4d.bitmaps.BaseBitmap()
     if bmp is None:
         raise MemoryError("Failed to create a BaseBitmap.")
-    if bmp.InitWith(fn)[0] != c4d.IMAGERESULT_OK:
+    if bmp.InitWith(img_path)[0] != c4d.IMAGERESULT_OK:
         raise MemoryError("Failed to initialize the BaseBitmap.")
     c4d.plugins.RegisterCommandPlugin(id=PLUGIN_ID, str="SmallSystemMonitor",
                                       help="Show the current cpu and memory usage.",
