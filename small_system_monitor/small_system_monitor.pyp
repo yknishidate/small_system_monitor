@@ -85,10 +85,8 @@ class SystemMonitor(c4d.gui.GeDialog):
         self.GroupEnd()
 
         if self.GroupBegin(id=2, flags=c4d.BFH_SCALEFIT, rows=1, title="", cols=2, groupflags=c4d.BORDER_GROUP_IN):
-            self.GroupBorderSpace(5, 0, 5, 0)
-
+            self.GroupBorderSpace(5, 0, 5, 5)
             self.mem_text = self.AddStaticText(id=2, initw=80, inith=0, name="Memory", borderstyle=0, flags=c4d.BFH_LEFT)
-
             memory_area = self.AddUserArea(id=1002, flags=c4d.BFH_SCALEFIT, inith=BAR_HEIGHT)
             self.AttachUserArea(self.mem_info, memory_area)
         self.GroupEnd()
@@ -110,7 +108,7 @@ class SystemMonitorCommandData(c4d.plugins.CommandData):
     def Execute(self, doc):
         if self.dialog is None:
             self.dialog = SystemMonitor()
-        return self.dialog.Open(dlgtype=c4d.DLG_TYPE_ASYNC, pluginid=PLUGIN_ID, defaulth=400, defaultw=400)
+        return self.dialog.Open(dlgtype=c4d.DLG_TYPE_ASYNC, pluginid=PLUGIN_ID, defaulth=0, defaultw=300)
 
     def RestoreLayout(self, sec_ref):
         if self.dialog is None:
