@@ -84,14 +84,9 @@ class SystemMonitor(c4d.gui.GeDialog):
     def __init__(self):
         self.cpu_info = CPUArea()
         self.mem_info = MemoryArea()
-        self.AddGadget(c4d.DIALOG_NOMENUBAR, 0)
 
     def CreateLayout(self):
         self.SetTitle("Small System Monitor")
-
-        if self.GroupBegin(id=0, flags=c4d.BFH_SCALEFIT, rows=1, title="", cols=1, groupflags=c4d.BORDER_GROUP_IN):
-            self.AddGadget(c4d.DIALOG_PIN, 0)
-        self.GroupEnd()
 
         # cpu area
         if self.GroupBegin(id=1, flags=c4d.BFH_SCALEFIT, rows=1, title="", cols=2, groupflags=c4d.BORDER_GROUP_IN):
