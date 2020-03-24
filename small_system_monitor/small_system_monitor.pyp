@@ -7,8 +7,8 @@ Released under the MIT license
 https://opensource.org/licenses/mit-license.php
 """
 
-import c4d
 import os
+import c4d
 import psutil
 
 PLUGIN_ID = 1054769
@@ -21,6 +21,7 @@ BACKGROUND_COLOR = c4d.Vector(50/255.0)
 BAR_HEIGHT = 3
 INTERVAL_TIME_MS = 1000
 
+
 class CPUArea(c4d.gui.GeUserArea):
     def Init(self):
         self.Update()
@@ -31,15 +32,19 @@ class CPUArea(c4d.gui.GeUserArea):
         self.SetClippingRegion(x1, y1, x2, y2)
         self.DrawSetPen(BACKGROUND_COLOR)
         self.DrawRectangle(x1, y1, x2, y2)
+
+        # cpu usage
         cpu = psutil.cpu_percent(0.1)
         x = (x2 - x1) * (cpu / 100.0)
         self.DrawSetPen(CPU_COLOR)
         self.DrawRectangle(x1, y1, x, y2)
+
         return
 
     def Update(self):
         self.Redraw()
         return
+
 
 class MemoryArea(c4d.gui.GeUserArea):
     def Init(self):
@@ -51,19 +56,25 @@ class MemoryArea(c4d.gui.GeUserArea):
         self.SetClippingRegion(x1, y1, x2, y2)
         self.DrawSetPen(BACKGROUND_COLOR)
         self.DrawRectangle(x1, y1, x2, y2)
+
+        # memory usage
         memory = psutil.virtual_memory() 
         x = (x2 - x1) * (float(memory.used) / memory.total)
         self.DrawSetPen(MEMORY_COLOR)
         self.DrawRectangle(x1, y1, x, y2)
+
+        # memory usage by c4d
         c4d_memory = c4d.storage.GeGetMemoryStat()
         x = (x2 - x1) * (float(c4d_memory[c4d.C4D_MEMORY_STAT_MEMORY_INUSE]) / memory.total)
         self.DrawSetPen(C4D_MEMORY_COLOR)
         self.DrawRectangle(x1, y1, x, y2)
+
         return
 
     def Update(self):
         self.Redraw()
         return
+
 
 class SystemMonitor(c4d.gui.GeDialog):
     def __init__(self):
@@ -73,10 +84,12 @@ class SystemMonitor(c4d.gui.GeDialog):
 
     def CreateLayout(self):
         self.SetTitle("Small System Monitor")
+
         if self.GroupBegin(id=0, flags=c4d.BFH_SCALEFIT, rows=1, title="", cols=1, groupflags=c4d.BORDER_GROUP_IN):
             self.AddGadget(c4d.DIALOG_PIN, 0)
         self.GroupEnd()
 
+        # cpu area
         if self.GroupBegin(id=1, flags=c4d.BFH_SCALEFIT, rows=1, title="", cols=2, groupflags=c4d.BORDER_GROUP_IN):
             self.GroupBorderSpace(5, 0, 5, 0)
             self.cpu_text = self.AddStaticText(id=3, initw=80, inith=0, name="CPU", borderstyle=0, flags=c4d.BFH_LEFT)
@@ -84,6 +97,7 @@ class SystemMonitor(c4d.gui.GeDialog):
             self.AttachUserArea(self.cpu_info, cpu_area)
         self.GroupEnd()
 
+        # memory area
         if self.GroupBegin(id=2, flags=c4d.BFH_SCALEFIT, rows=1, title="", cols=2, groupflags=c4d.BORDER_GROUP_IN):
             self.GroupBorderSpace(5, 0, 5, 5)
             self.mem_text = self.AddStaticText(id=2, initw=80, inith=0, name="Memory", borderstyle=0, flags=c4d.BFH_LEFT)
@@ -124,9 +138,6 @@ if __name__ == "__main__":
         raise MemoryError("Failed to create a BaseBitmap.")
     if bmp.InitWith(fn)[0] != c4d.IMAGERESULT_OK:
         raise MemoryError("Failed to initialize the BaseBitmap.")
-    c4d.plugins.RegisterCommandPlugin(id=PLUGIN_ID,
-                                      str="SmallSystemMonitor",
+    c4d.plugins.RegisterCommandPlugin(id=PLUGIN_ID, str="SmallSystemMonitor",
                                       help="Show the current memory and cpu usage.",
-                                      info=0,
-                                      dat=SystemMonitorCommandData(),
-                                      icon=bmp)
+                                      info=0, dat=SystemMonitorCommandData(), icon=bmp)
