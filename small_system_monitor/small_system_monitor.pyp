@@ -139,5 +139,5 @@ if __name__ == "__main__":
     if bmp.InitWith(fn)[0] != c4d.IMAGERESULT_OK:
         raise MemoryError("Failed to initialize the BaseBitmap.")
     c4d.plugins.RegisterCommandPlugin(id=PLUGIN_ID, str="SmallSystemMonitor",
-                                      help="Show the current memory and cpu usage.",
+                                      help="Show the current cpu and memory usage.",
                                       info=0, dat=SystemMonitorCommandData(), icon=bmp)
